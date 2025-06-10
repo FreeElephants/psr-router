@@ -1,5 +1,5 @@
 {
-    "name": "free-elephats/psr-router",
+    "name": "free-elephants/psr-router",
     "description": "Framework Agnostic PSR Router",
     "license": "BSD-2-Clause",
     "authors": [],
@@ -8,12 +8,12 @@
     },
     "autoload": {
     	"psr-4": {
-            "FreeElepehants\\PsrRouter\\": "src/FreeElephants/PsrRouter"
+            "FreeElephants\\PsrRouter\\": "src/FreeElephants/PsrRouter"
     	}
     },
     "autoload-dev": {
     	"psr-4": {
-            "FreeElepehants\\PsrRouter\\": "tests/FreeElepehants/PsrRouter"
+            "FreeElephants\\PsrRouter\\": "tests/FreeElephants/PsrRouter"
     	}
     }
 }
