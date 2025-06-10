@@ -1,6 +1,6 @@
 {
-    "name": "samizdam/skeleton",
-    "description": "",
+    "name": "free-elephats/psr-router",
+    "description": "Framework Agnostic PSR Router",
     "license": "BSD-2-Clause",
     "authors": [],
     "require-dev": {
@@ -8,12 +8,12 @@
     },
     "autoload": {
     	"psr-4": {
-            "Samizam\\Skeleton\\": "src/Samizdam/Skeleton"
+            "FreeElepehants\\PsrRouter\\": "src/FreeElephants/PsrRouter"
     	}
     },
     "autoload-dev": {
     	"psr-4": {
-            "Samizdam\\Skeleton\\": "tests/Samizdam/Skeleton"
+            "FreeElepehants\\PsrRouter\\": "tests/FreeElepehants/PsrRouter"
     	}
     }
 }
