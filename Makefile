@@ -7,7 +7,7 @@ install: build
 	cp -n phpunit.xml.dist phpunit.xml
 
 build:
-	docker build -t $(PHP_DEV_IMAGE):$(REVISION) .
+	docker build --build-arg PHP_VERSION=$(PHP_VERSION) -t $(PHP_DEV_IMAGE):$(REVISION) .
 
 test:
 	php vendor/bin/phpunit
