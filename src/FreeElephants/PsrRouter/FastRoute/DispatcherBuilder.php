@@ -11,7 +11,7 @@ class DispatcherBuilder
 {
     private array $routes = [];
 
-    public function addRoute(string $path, string $method, string $handler): self
+    public function addRoute(string $path, string $handler, string $method = 'GET'): self
     {
         $this->routes[$path][$method] = $handler;
 
@@ -20,7 +20,7 @@ class DispatcherBuilder
 
     public function addConfig(array $config): self
     {
-        $this->routes = array_merge_recursive($this->routes, $config);
+        $this->routes = array_merge_recursive($this->routes, $this->normalizeConfig($config));
 
         return $this;
     }
@@ -28,11 +28,28 @@ class DispatcherBuilder
     public function build(): Dispatcher
     {
         return simpleDispatcher(function (RouteCollector $routeCollector) {
-            foreach ($this->routes as $path => $methods) {
-                foreach ($methods as $method => $handler) {
-                    $routeCollector->addRoute($method, $path, $handler);
+            foreach ($this->routes as $path => $methodsOrHandler) {
+                if(is_array($methodsOrHandler)) {
+                    foreach ($methodsOrHandler as $method => $handler) {
+                        $routeCollector->addRoute($method, $path, $handler);
+                    }
+                } else {
+                    $routeCollector->addRoute('GET', $path, $methodsOrHandler);
                 }
             }
         });
+    }
+
+    private function normalizeConfig(array $config): array
+    {
+        $normalized = [];
+        foreach ($config as $path => $methods) {
+            if(!is_array($methods)) {
+                $methods = ['GET' => $methods];
+            }
+            $normalized[$path] = $methods;
+        }
+
+        return $normalized;
     }
 }
