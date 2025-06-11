@@ -25,3 +25,18 @@ $router = new \FreeElephants\PsrRouter\Router(
 );
 
 ```
+
+## Customization
+
+### Slash Normalizing
+
+```php
+
+
+```
+
+### OPTIONS Handling  
+
+```php
+
+```
