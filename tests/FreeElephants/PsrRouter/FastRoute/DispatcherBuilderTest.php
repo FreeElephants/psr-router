@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace FreeElephants\PsrRouter\FastRoute;
 
 use FastRoute\Dispatcher;
+use FreeElephants\PsrRouter\PathNormalization\TrailingSlashTrimmer;
 use PHPUnit\Framework\TestCase;
 
 class DispatcherBuilderTest extends TestCase
@@ -11,10 +12,10 @@ class DispatcherBuilderTest extends TestCase
 
     public function testBuild(): void
     {
-        $builder = new DispatcherBuilder();
+        $builder = new DispatcherBuilder(new TrailingSlashTrimmer());
 
         $dispatcher = $builder
-            ->addRoute('/users/{id}', 'get user by id', 'GET')
+            ->addRoute('/users/{id}', 'get user by id')
             ->addConfig([
                 '/users/{id}' => [
                     'PATCH' => 'update user',
@@ -23,8 +24,7 @@ class DispatcherBuilderTest extends TestCase
                 '/users' => 'get users',
             ])
             ->addConfig([
-                '/users' => [
-//                    'GET' => 'get users',
+                '/users/' => [ // trailing slash will be normalized with given PathNormalizerInterface
                     'POST' => 'post user to collection',
                 ],
             ])

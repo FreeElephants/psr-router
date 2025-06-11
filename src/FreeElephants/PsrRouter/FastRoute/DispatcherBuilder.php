@@ -5,14 +5,24 @@ namespace FreeElephants\PsrRouter\FastRoute;
 
 use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
+use FreeElephants\PsrRouter\PathNormalization\Dummy;
+use FreeElephants\PsrRouter\PathNormalization\PathNormalizerInterface;
 use function FastRoute\simpleDispatcher;
 
 class DispatcherBuilder
 {
     private array $routes = [];
+    private PathNormalizerInterface $pathNormalizer;
+
+    public function __construct(PathNormalizerInterface $pathNormalizer = null)
+    {
+        $this->pathNormalizer = $pathNormalizer ?? new Dummy();
+    }
 
     public function addRoute(string $path, string $handler, string $method = 'GET'): self
     {
+        $path = $this->pathNormalizer->normalizePath($path);
+
         $this->routes[$path][$method] = $handler;
 
         return $this;
@@ -44,6 +54,8 @@ class DispatcherBuilder
     {
         $normalized = [];
         foreach ($config as $path => $methods) {
+            $path = $this->pathNormalizer->normalizePath($path);
+
             if(!is_array($methods)) {
                 $methods = ['GET' => $methods];
             }

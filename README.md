@@ -12,12 +12,6 @@ $routes = [
         'GET' => GetUserHandler::class,
         'PATCH' => UpdateUserHandler::class, 
     ],
-    // 3. Middleware-aware syntax - three levels configuration
-    '/api/v1/posts' => [
-        'POST' => [
-            
-        ],           
-    ],
 ];
 
 $fastRouteDispatcher = (new \FreeElephants\PsrRouter\FastRoute\DispatcherBuilder())

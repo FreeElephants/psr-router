@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace FreeElephants\PsrRouter;
 
 use FastRoute\Dispatcher;
+use FreeElephants\PsrRouter\PathNormalization\Dummy;
+use FreeElephants\PsrRouter\PathNormalization\PathNormalizerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
@@ -12,19 +14,23 @@ class Router
 
     private RequestHandlerFactoryInterface $requestHandlerFactory;
     private Dispatcher $dispatcher;
+    private PathNormalizerInterface $pathNormalizer;
 
     public function __construct(
         RequestHandlerFactoryInterface $requestHandlerFactory,
-        Dispatcher                     $dispatcher
+        Dispatcher                     $dispatcher,
+        PathNormalizerInterface $pathNormalizer = null
     )
     {
         $this->requestHandlerFactory = $requestHandlerFactory;
         $this->dispatcher = $dispatcher;
+        $this->pathNormalizer = $pathNormalizer ?? new Dummy();
     }
 
     public function getHandler(ServerRequestInterface $request): HandlerAndRequestWithArgsContainer
     {
-        $fastRouteResult = $this->dispatcher->dispatch($request->getMethod(), $request->getUri()->getPath());
+        $path = $this->pathNormalizer->normalizePath($request->getUri()->getPath());
+        $fastRouteResult = $this->dispatcher->dispatch($request->getMethod(), $path);
         switch ($fastRouteResult[0]) {
             case Dispatcher::FOUND:
                 $args = $fastRouteResult[2];
