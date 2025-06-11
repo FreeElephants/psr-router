@@ -18,8 +18,10 @@
     }
   },
   "require": {
-    "psr/http-server-handler": "^1.0",
-    "psr/http-message": "^2.0"
+    "free-elephants/di": "^4.1",
+    "nikic/fast-route": "^1.3",
+    "psr/http-message": "^2.0",
+    "psr/http-server-handler": "^1.0"
   },
   "config": {
     "sort-packages": true
