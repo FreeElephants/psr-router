@@ -22,17 +22,20 @@ class Router
         $this->dispatcher = $dispatcher;
     }
 
-    public function getHandler(ServerRequestInterface $request): RequestHandlerInterface
+    public function getHandler(ServerRequestInterface $request): HandlerAndRequestWithArgsContainer
     {
         $fastRouteResult = $this->dispatcher->dispatch($request->getMethod(), $request->getUri()->getPath());
         switch ($fastRouteResult[0]) {
             case Dispatcher::FOUND:
                 $args = $fastRouteResult[2];
                 foreach ($args as $name => $value) {
-                    $request->withAttribute($name, $value);
+                    $request = $request->withAttribute($name, $value);
                 }
 
-                return $this->requestHandlerFactory->create($fastRouteResult[1]);
+                return new HandlerAndRequestWithArgsContainer(
+                    $request,
+                    $this->requestHandlerFactory->create($fastRouteResult[1])
+                );
             case Dispatcher::NOT_FOUND:
                 throw new \Exception('Route not found');
             case Dispatcher::METHOD_NOT_ALLOWED:

@@ -27,7 +27,8 @@ class RouterTest extends TestCase
         );
 
         $serverRequest = new ServerRequest('GET', '/users/100');
-        $actualRequestHandler = $router->getHandler($serverRequest);
-        $this->assertSame($expectedRequestHandler, $actualRequestHandler);
+        $actualRequestHandlerAndRequest = $router->getHandler($serverRequest);
+        $this->assertSame($expectedRequestHandler, $actualRequestHandlerAndRequest->getHandler());
+        $this->assertSame('100', $actualRequestHandlerAndRequest->getRequest()->getAttribute('id'));
     }
 }
