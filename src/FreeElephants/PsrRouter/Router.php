@@ -7,7 +7,6 @@ use FastRoute\Dispatcher;
 use FreeElephants\PsrRouter\PathNormalization\Dummy;
 use FreeElephants\PsrRouter\PathNormalization\PathNormalizerInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\RequestHandlerInterface;
 
 class Router
 {

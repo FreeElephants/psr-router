@@ -30,13 +30,36 @@ $router = new \FreeElephants\PsrRouter\Router(
 
 ### Slash Normalizing
 
+For handle trailing slashes in path you can inject PathNormalizer implementation into both classes:  
+- Router - its rtrim trailing slash at runtime from request path.  
+- DispatcherBuilder - its rtrim on add route at build time.
+
 ```php
+$pathNormalizer = new \FreeElephants\PsrRouter\PathNormalization\TrailingSlashTrimmer();
+$dispatcher = (new \FreeElephants\PsrRouter\FastRoute\DispatcherBuilder(
+    pathNormalizer: $pathNormalizer))
+    ...
+    ...
+    ->build();
 
 
+$router = new \FreeElephants\PsrRouter\Router(
+    $requestHandlerFactory,
+    $dispatcher,
+    pathNormalizer: $pathNormalizer
+    
+)
 ```
 
 ### OPTIONS Handling  
 
-```php
+By default, Router does not know about `OPTIONS` and allowed methods for route. 
 
+For handle `OPTIONS` request, you can set your own handler prototype. Every route will be handling this method according to other collected methods.  
+
+```php
+/**
+ * @var \FreeElephants\PsrRouter\FastRoute\DispatcherBuilder $dispatcherBuilder
+ */
+$dispatcherBuilder->setOptionsHandlerPrototype($optionsRequestHandlerImpl)->build();
 ```
