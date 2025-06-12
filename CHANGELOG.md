@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Path normalizing for trailing slash
+- `OPTIONS` Handler prototype support
 
 ## [0.0.1] - 2025-06-11
 
