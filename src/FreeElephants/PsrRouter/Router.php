@@ -61,7 +61,7 @@ class Router
                     return new HandlerAndRequestWithArgsContainer($request, $this->methodNotAllowedHandler);
                 }
 
-                throw new MethodNotAllowed($fastRouteResult[1]);
+                throw new MethodNotAllowed($request, $fastRouteResult[1]);
         }
 
         throw new \Exception('Unexpected fast route result');
