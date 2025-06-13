@@ -26,6 +26,8 @@ class DispatcherBuilder
     public function setOptionsHandlerPrototype(OptionsHandlerInterface $handler): self
     {
         $this->optionsHandlerPrototype = $handler;
+
+        return $this;
     }
 
     public function addRoute(string $path, string $handler, string $method = 'GET'): self
