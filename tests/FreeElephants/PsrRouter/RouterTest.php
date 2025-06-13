@@ -26,8 +26,10 @@ class RouterTest extends TestCase
         $requestHandlerFactory->method('create')->willReturn($expectedRequestHandler);
 
         $router = new Router(
-            $requestHandlerFactory,
             $dispatcher,
+            $requestHandlerFactory,
+            null,
+            null,
             new TrailingSlashTrimmer(),
         );
 

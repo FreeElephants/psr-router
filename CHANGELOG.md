@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Path normalizing for trailing slash
 - `OPTIONS` Handler prototype support
+- Types Exceptions
+- Handlers for not found and not allowed cases
+
+### Changed
+- Constructors arguments order
 
 ## [0.0.1] - 2025-06-11
 

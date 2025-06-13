@@ -44,8 +44,8 @@ $dispatcher = (new \FreeElephants\PsrRouter\FastRoute\DispatcherBuilder(
 
 
 $router = new \FreeElephants\PsrRouter\Router(
-    $requestHandlerFactory,
     $dispatcher,
+    $requestHandlerFactory,
     pathNormalizer: $pathNormalizer
     
 )

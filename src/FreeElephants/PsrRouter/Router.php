@@ -4,9 +4,12 @@ declare(strict_types=1);
 namespace FreeElephants\PsrRouter;
 
 use FastRoute\Dispatcher;
+use FreeElephants\PsrRouter\Exception\MethodNotAllowed;
+use FreeElephants\PsrRouter\Exception\NotFound;
 use FreeElephants\PsrRouter\PathNormalization\Dummy;
 use FreeElephants\PsrRouter\PathNormalization\PathNormalizerInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
 class Router
 {
@@ -14,15 +17,21 @@ class Router
     private RequestHandlerFactoryInterface $requestHandlerFactory;
     private Dispatcher $dispatcher;
     private PathNormalizerInterface $pathNormalizer;
+    private ?RequestHandlerInterface $notFoundHandler;
+    private ?MethodNotAllowedHandlerInterface $methodNotAllowedHandler;
 
     public function __construct(
-        RequestHandlerFactoryInterface $requestHandlerFactory,
-        Dispatcher                     $dispatcher,
-        PathNormalizerInterface $pathNormalizer = null
+        Dispatcher                       $dispatcher,
+        RequestHandlerFactoryInterface   $requestHandlerFactory,
+        RequestHandlerInterface          $notFoundHandler = null,
+        MethodNotAllowedHandlerInterface $methodNotAllowedHandler = null,
+        PathNormalizerInterface          $pathNormalizer = null
     )
     {
-        $this->requestHandlerFactory = $requestHandlerFactory;
         $this->dispatcher = $dispatcher;
+        $this->requestHandlerFactory = $requestHandlerFactory;
+        $this->notFoundHandler = $notFoundHandler;
+        $this->methodNotAllowedHandler = $methodNotAllowedHandler;
         $this->pathNormalizer = $pathNormalizer ?? new Dummy();
     }
 
@@ -42,9 +51,17 @@ class Router
                     $this->requestHandlerFactory->create($fastRouteResult[1])
                 );
             case Dispatcher::NOT_FOUND:
-                throw new \Exception('Route not found');
+                if (isset($this->notFoundHandler)) {
+                    return new HandlerAndRequestWithArgsContainer($request, $this->notFoundHandler);
+                }
+
+                throw new NotFound();
             case Dispatcher::METHOD_NOT_ALLOWED:
-                throw new \Exception('Method not allowed');
+                if (isset($this->methodNotAllowedHandler)) {
+                    return new HandlerAndRequestWithArgsContainer($request, $this->methodNotAllowedHandler);
+                }
+
+                throw new MethodNotAllowed($fastRouteResult[1]);
         }
 
         throw new \Exception('Unexpected fast route result');
