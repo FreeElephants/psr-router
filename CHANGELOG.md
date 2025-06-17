@@ -7,12 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.2] - 2025-06-17
+
 ### Added
 - Path normalizing for trailing slash
 - `OPTIONS` Handler prototype support
 - Types Exceptions
 - Handlers for not found and not allowed cases
-- Handler instances support
+- Handler instances support in configuration
 
 ### Changed
 - Constructors arguments order
@@ -22,5 +24,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Router, RequestHandlerFactory and FastRoute backed implementation of basics
 
-[Unreleased]: https://github.com/FreeElephants/json-api-dto/compare/0.0.1...HEAD
-[0.0.1]: https://github.com/FreeElephants/json-api-dto/releases/tag/0.0.1
+[Unreleased]: https://github.com/FreeElephants/psr-router/compare/0.0.2...HEAD
+[0.0.2]: https://github.com/FreeElephants/psr-router/releases/tag/0.0.2
+[0.0.1]: https://github.com/FreeElephants/psr-router/releases/tag/0.0.1

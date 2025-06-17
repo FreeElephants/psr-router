@@ -10,7 +10,10 @@ $routes = [
     // 2. Method-based syntax - two levels configuration
     '/api/v1/users/{id}' => [ // Router parse path params and set named arguments to request (method based syntax
         'GET' => GetUserHandler::class,
-        'PATCH' => UpdateUserHandler::class, 
+        'PATCH' => UpdateUserHandler::class,
+        'DELETE' => new class implements \Psr\Http\Server\RequestHandlerInterface {
+            // psr handler instance allowed as value too 
+        }
     ],
 ];
 
