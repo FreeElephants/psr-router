@@ -46,9 +46,13 @@ class Router
                     $request = $request->withAttribute($name, $value);
                 }
 
+                $handler = $fastRouteResult[1];
+                if (is_string($handler instanceof RequestHandlerInterface)) {
+                    $handler = $this->requestHandlerFactory->create($handler);
+                }
                 return new HandlerAndRequestWithArgsContainer(
                     $request,
-                    $this->requestHandlerFactory->create($fastRouteResult[1])
+                    $handler
                 );
             case Dispatcher::NOT_FOUND:
                 if (isset($this->notFoundHandler)) {

@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `OPTIONS` Handler prototype support
 - Types Exceptions
 - Handlers for not found and not allowed cases
+- Handler instances support
 
 ### Changed
 - Constructors arguments order
