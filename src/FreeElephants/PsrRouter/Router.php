@@ -47,7 +47,7 @@ class Router
                 }
 
                 $handler = $fastRouteResult[1];
-                if (is_string($handler instanceof RequestHandlerInterface)) {
+                if (is_string($handler)) {
                     $handler = $this->requestHandlerFactory->create($handler);
                 }
                 return new HandlerAndRequestWithArgsContainer(
