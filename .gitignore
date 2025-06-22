@@ -13,7 +13,7 @@
 # PHPUnit
 .phpunit.cache/
 .phpunit.result.cache
-phpunit.xml.dist
+phpunit.xml
 tests/_coverage
 
 # composer
