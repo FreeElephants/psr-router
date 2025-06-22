@@ -11,8 +11,9 @@
 .php-cs-fixer.cache
 
 # PHPUnit
+.phpunit.cache/
 .phpunit.result.cache
-phpunit.xml
+phpunit.xml.dist
 tests/_coverage
 
 # composer
