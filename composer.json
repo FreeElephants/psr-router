@@ -8,6 +8,7 @@
       "name": "samizdam"
     }
   ],
+  "type": "library",
   "require-dev": {
     "nyholm/psr7": "^1.8",
     "phpunit/phpunit": "^9|^10|^11|^12.1"
