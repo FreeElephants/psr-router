@@ -12,6 +12,7 @@
   "require-dev": {
     "free-elephants/php-cs-fixer-ruleset": "^1.0.1",
     "nyholm/psr7": "^1.8",
+    "phpstan/phpstan": "^2.1",
     "phpunit/phpunit": "^9|^10|^11|^12.1"
   },
   "autoload": {
