@@ -2,7 +2,12 @@
   "name": "free-elephants/psr-router",
   "description": "Framework Agnostic PSR Router",
   "license": "BSD-2-Clause",
-  "authors": [],
+  "authors": [
+    {
+      "email": "samizdam@inbox.ru",
+      "name": "samizdam"
+    }
+  ],
   "require-dev": {
     "nyholm/psr7": "^1.8",
     "phpunit/phpunit": "^9|^10|^11|^12.1"
