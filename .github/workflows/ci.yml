@@ -54,3 +54,8 @@ jobs:
         env:
           XDEBUG_MODE: coverage
         run: vendor/bin/phpunit
+
+      - name: Code style
+        env:
+          XDEBUG_MODE: coverage
+        run: vendor/bin/php-cs-fixer check
