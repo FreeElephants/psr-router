@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace FreeElephants\PsrRouter;
@@ -13,7 +14,6 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class Router
 {
-
     private RequestHandlerFactoryInterface $requestHandlerFactory;
     private Dispatcher $dispatcher;
     private PathNormalizerInterface $pathNormalizer;
@@ -21,13 +21,12 @@ class Router
     private ?MethodNotAllowedHandlerInterface $methodNotAllowedHandler;
 
     public function __construct(
-        Dispatcher                       $dispatcher,
-        RequestHandlerFactoryInterface   $requestHandlerFactory,
-        RequestHandlerInterface          $notFoundHandler = null,
-        MethodNotAllowedHandlerInterface $methodNotAllowedHandler = null,
-        PathNormalizerInterface          $pathNormalizer = null
-    )
-    {
+        Dispatcher $dispatcher,
+        RequestHandlerFactoryInterface $requestHandlerFactory,
+        ?RequestHandlerInterface $notFoundHandler = null,
+        ?MethodNotAllowedHandlerInterface $methodNotAllowedHandler = null,
+        ?PathNormalizerInterface $pathNormalizer = null
+    ) {
         $this->dispatcher = $dispatcher;
         $this->requestHandlerFactory = $requestHandlerFactory;
         $this->notFoundHandler = $notFoundHandler;
@@ -50,9 +49,10 @@ class Router
                 if (is_string($handler)) {
                     $handler = $this->requestHandlerFactory->create($handler);
                 }
+
                 return new HandlerAndRequestWithArgsContainer(
                     $request,
-                    $handler
+                    $handler,
                 );
             case Dispatcher::NOT_FOUND:
                 if (isset($this->notFoundHandler)) {

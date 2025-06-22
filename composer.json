@@ -2,8 +2,15 @@
   "name": "free-elephants/psr-router",
   "description": "Framework Agnostic PSR Router",
   "license": "BSD-2-Clause",
-  "authors": [],
+  "authors": [
+    {
+      "email": "samizdam@inbox.ru",
+      "name": "samizdam"
+    }
+  ],
+  "type": "library",
   "require-dev": {
+    "free-elephants/php-cs-fixer-ruleset": "^1.0.1",
     "nyholm/psr7": "^1.8",
     "phpunit/phpunit": "^9|^10|^11|^12.1"
   },
@@ -18,10 +25,13 @@
     }
   },
   "require": {
-    "free-elephants/di": "^4.1",
     "nikic/fast-route": "^1.3",
+    "psr/container": "^2.0",
     "psr/http-message": "^2.0",
     "psr/http-server-handler": "^1.0"
+  },
+  "suggest": {
+    "free-elephants/di": "*"
   },
   "config": {
     "sort-packages": true

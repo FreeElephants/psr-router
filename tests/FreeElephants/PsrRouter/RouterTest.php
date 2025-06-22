@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace FreeElephants\PsrRouter;
@@ -14,7 +15,7 @@ class RouterTest extends TestCase
 {
     public function testGetHandler(): void
     {
-        $dispatcher = simpleDispatcher(function(RouteCollector $r) {
+        $dispatcher = simpleDispatcher(function (RouteCollector $r) {
             // {id} must be a number (\d+)
             $r->addRoute('GET', '/users/{id:\d+}', 'get_user_handler');
 
