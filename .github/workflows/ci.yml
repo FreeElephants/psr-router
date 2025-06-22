@@ -57,5 +57,5 @@ jobs:
 
       - name: Code style
         env:
-          XDEBUG_MODE: coverage
+          PHP_CS_FIXER_IGNORE_ENV: true
         run: vendor/bin/php-cs-fixer check
