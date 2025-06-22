@@ -23,8 +23,8 @@ $fastRouteDispatcher = (new \FreeElephants\PsrRouter\FastRoute\DispatcherBuilder
     ->build(); 
 
 $router = new \FreeElephants\PsrRouter\Router(
-    new \FreeElephants\PsrRouter\RequestHandlerFactory($psrContainer),
     $fastRouteDispatcher,
+    new \FreeElephants\PsrRouter\RequestHandlerFactory($psrContainer),
 );
 
 ```
