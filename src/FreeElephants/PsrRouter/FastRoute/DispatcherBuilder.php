@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace FreeElephants\PsrRouter\FastRoute;
@@ -17,9 +18,8 @@ class DispatcherBuilder
     private OptionsHandlerInterface $optionsHandlerPrototype;
 
     public function __construct(
-        PathNormalizerInterface $pathNormalizer = null
-    )
-    {
+        ?PathNormalizerInterface $pathNormalizer = null
+    ) {
         $this->pathNormalizer = $pathNormalizer ?? new Dummy();
     }
 

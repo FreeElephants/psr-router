@@ -13,9 +13,7 @@ class HandlerAndRequestWithArgsContainer
     public function __construct(
         ServerRequestInterface $request,
         RequestHandlerInterface $handler
-    )
-    {
-
+    ) {
         $this->request = $request;
         $this->handler = $handler;
     }

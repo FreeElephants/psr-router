@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace FreeElephants\PsrRouter;
@@ -8,7 +9,6 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class RequestHandlerFactory implements RequestHandlerFactoryInterface
 {
-
     private ContainerInterface $container;
 
     public function __construct(ContainerInterface $container)
