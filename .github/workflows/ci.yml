@@ -56,6 +56,8 @@ jobs:
         run: vendor/bin/phpunit
 
       - name: Code style
+        env:
+          PHP_CS_FIXER_IGNORE_ENV: true
         run: vendor/bin/php-cs-fixer fix --dry-run
 
       - name: Static analyze
