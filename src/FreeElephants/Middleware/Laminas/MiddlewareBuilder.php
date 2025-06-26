@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace FreeElephants\Middleware\Laminas;
 
+use FreeElephants\Middleware\RouteParamsPathAndMethodMiddlewareDecorator;
 use Laminas\Stratigility\MiddlewarePipe;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Server\MiddlewareInterface;
-use function Laminas\Stratigility\path;
 
 class MiddlewareBuilder
 {
@@ -52,7 +52,7 @@ class MiddlewareBuilder
         foreach ($this->config as $path => $pathConfig) {
             foreach ($pathConfig as $method => $middlewares) {
                 foreach ($middlewares as $middlewareClassName) {
-                    $pipe->pipe(path($path, $this->container->get($middlewareClassName)));
+                    $pipe->pipe(new RouteParamsPathAndMethodMiddlewareDecorator($path, [$method], $this->container->get($middlewareClassName)));
                 }
             }
         }

@@ -29,10 +29,17 @@ class MiddlewareBuilderTest extends TestCase
             {
                 $this->ids[] = $id;
 
-                return new class () implements MiddlewareInterface {
+                return new class ($id) implements MiddlewareInterface {
+                    private $id;
+
+                    public function __construct($id)
+                    {
+                        $this->id = $id;
+                    }
+
                     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
                     {
-                        return new Response();
+                        return $handler->handle($request)->withAddedHeader('handled-with', $this->id);
                     }
                 };
             }
@@ -52,12 +59,15 @@ class MiddlewareBuilderTest extends TestCase
                 'additional-root-middleware-B',
             ],
         ])->build();
-        $middleware->process(new ServerRequest('/', 'GET'), new class () implements RequestHandlerInterface {
+
+        $response = $middleware->process(new ServerRequest('GET', '/'), new class () implements RequestHandlerInterface {
             public function handle(ServerRequestInterface $request): ResponseInterface
             {
                 return new Response();
             }
         });
+
+        $this->assertCount(3, $response->getHeader('handled-with'));
 
         $this->assertTrue($container->isIdKnown('root-middleware'));
     }
