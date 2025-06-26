@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace FreeElephants\Middleware\Laminas;
@@ -14,10 +15,9 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class MiddlewareBuilderTest extends TestCase
 {
-
     public function testBuild(): void
     {
-        $container = new class implements ContainerInterface {
+        $container = new class () implements ContainerInterface {
             private array $ids = [];
 
             public function isIdKnown(string $id): bool
@@ -28,7 +28,8 @@ class MiddlewareBuilderTest extends TestCase
             public function get(string $id)
             {
                 $this->ids[] = $id;
-                return new class implements MiddlewareInterface {
+
+                return new class () implements MiddlewareInterface {
                     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
                     {
                         // TODO: Implement process() method.
@@ -51,7 +52,7 @@ class MiddlewareBuilderTest extends TestCase
                 'additional-root-middleware-B',
             ],
         ])->build();
-        $middleware->process(new ServerRequest('/', 'GET'), new class implements RequestHandlerInterface {
+        $middleware->process(new ServerRequest('/', 'GET'), new class () implements RequestHandlerInterface {
             public function handle(ServerRequestInterface $request): ResponseInterface
             {
                 return new Response();

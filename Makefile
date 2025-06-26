@@ -11,3 +11,6 @@ build:
 
 test:
 	php vendor/bin/phpunit
+
+cs:
+	php vendor/bin/php-cs-fixer fix

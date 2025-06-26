@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace FreeElephants\Middleware\Laminas;
@@ -21,8 +22,7 @@ class MiddlewareBuilder
 
     public function __construct(
         ContainerInterface $container
-    )
-    {
+    ) {
         $this->container = $container;
     }
 
