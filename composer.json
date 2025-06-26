@@ -17,19 +17,21 @@
   },
   "autoload": {
     "psr-4": {
-      "FreeElephants\\PsrRouter\\": "src/FreeElephants/PsrRouter"
+      "FreeElephants\\": "src/FreeElephants/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "FreeElephants\\PsrRouter\\": "tests/FreeElephants/PsrRouter"
+      "FreeElephants\\": "tests/FreeElephants/"
     }
   },
   "require": {
+    "laminas/laminas-stratigility": "^4.2",
     "nikic/fast-route": "^1.3",
     "psr/container": "^2.0",
     "psr/http-message": "^1.0|^2.0",
-    "psr/http-server-handler": "^1.0"
+    "psr/http-server-handler": "^1.0",
+    "psr/http-server-middleware": "^1.0"
   },
   "suggest": {
     "free-elephants/di": "*"
