@@ -66,3 +66,27 @@ For handle `OPTIONS` request, you can set your own handler prototype. Every rout
  */
 $dispatcherBuilder->setOptionsHandlerPrototype($optionsRequestHandlerImpl)->build();
 ```
+
+## Middleware Configuration Support
+
+```php
+$middleware = (new \FreeElephants\Middleware\Laminas\MiddlewareBuilder($container))
+    ->setDefaultMethods(['GET', 'POST']) // see MiddlewareBuilder::DEFAULT_METHODS
+    ->addConfig([
+        // Examples for different levels of configuration, anywhere path based
+        '/' => RootMiddlewareForAllDefaultMethods::class,
+        '/foo' => [
+            FooMiddlewareA::class,
+            FooMiddlewareB::class,
+        ], 
+        '/foo/{arg}' => [
+            'PUT' => [
+                PutFooMiddleware::class,
+            ],
+            'OPTIONS' => FooWithArgOptionsMiddleware::class,
+        ],   
+    ])
+    ->build();
+
+$middleware->process($request, $routerOrYourOwnedRequestHandler);
+```

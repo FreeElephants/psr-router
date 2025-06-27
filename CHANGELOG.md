@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.5] - 2025-06-27
+
+### Added
+- MiddlewareBuilder (Laminas based)
+- Router implements PSR/RequestHandlerInterface
+
+### Changed
+- **BC:** `Router::getHandler()` method renamed to `getHandlerWithRequestContainer`
+
 ## [0.0.4] - 2025-06-22
 
 ### Changed
@@ -40,7 +49,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Router, RequestHandlerFactory and FastRoute backed implementation of basics
 
-[Unreleased]: https://github.com/FreeElephants/psr-router/compare/0.0.4...HEAD
+[Unreleased]: https://github.com/FreeElephants/psr-router/compare/0.0.5...HEAD
+[0.0.5]: https://github.com/FreeElephants/psr-router/releases/tag/0.0.5
 [0.0.4]: https://github.com/FreeElephants/psr-router/releases/tag/0.0.4
 [0.0.3]: https://github.com/FreeElephants/psr-router/releases/tag/0.0.3
 [0.0.2]: https://github.com/FreeElephants/psr-router/releases/tag/0.0.2

@@ -9,10 +9,11 @@ use FreeElephants\PsrRouter\Exception\MethodNotAllowed;
 use FreeElephants\PsrRouter\Exception\NotFound;
 use FreeElephants\PsrRouter\PathNormalization\Dummy;
 use FreeElephants\PsrRouter\PathNormalization\PathNormalizerInterface;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class Router
+class Router implements RequestHandlerInterface
 {
     private RequestHandlerFactoryInterface $requestHandlerFactory;
     private Dispatcher $dispatcher;
@@ -34,7 +35,7 @@ class Router
         $this->pathNormalizer = $pathNormalizer ?? new Dummy();
     }
 
-    public function getHandler(ServerRequestInterface $request): HandlerAndRequestWithArgsContainer
+    public function getHandlerWithRequestContainer(ServerRequestInterface $request): HandlerAndRequestWithArgsContainer
     {
         $path = $this->pathNormalizer->normalizePath($request->getUri()->getPath());
         $fastRouteResult = $this->dispatcher->dispatch($request->getMethod(), $path);
@@ -69,5 +70,12 @@ class Router
         }
 
         throw new \Exception('Unexpected fast route result');
+    }
+
+    public function handle(ServerRequestInterface $request): ResponseInterface
+    {
+        $handlerAndRequestWithArgsContainer = $this->getHandlerWithRequestContainer($request);
+
+        return $handlerAndRequestWithArgsContainer->getHandler()->handle($handlerAndRequestWithArgsContainer->getRequest());
     }
 }
