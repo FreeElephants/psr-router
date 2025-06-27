@@ -17,7 +17,7 @@ class MiddlewareBuilder
         'PUT',
         'DELETE',
     ];
-    private array $config;
+    private array $config = [];
     private ContainerInterface $container;
     private array $defaultMethods = self::DEFAULT_METHODS;
 
