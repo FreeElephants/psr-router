@@ -18,21 +18,12 @@ class MiddlewareBuilderTest extends TestCase
     public function testBuild(): void
     {
         $container = new class () implements ContainerInterface {
-            private array $ids = [];
-
-            public function isIdKnown(string $id): bool
-            {
-                return in_array($id, $this->ids, true);
-            }
-
             public function get(string $id)
             {
-                $this->ids[] = $id;
-
                 return new class ($id) implements MiddlewareInterface {
-                    private $id;
+                    private string $id;
 
-                    public function __construct($id)
+                    public function __construct(string $id)
                     {
                         $this->id = $id;
                     }
@@ -85,9 +76,9 @@ class MiddlewareBuilderTest extends TestCase
             }
         };
 
-        //        $responseForGetRoot = $middleware->process(new ServerRequest('GET', '/'), $simpleHandler);
-        //        $this->assertCount(3, $responseForGetRoot->getHeader('handled-with'));
-        //
+        $responseForGetRoot = $middleware->process(new ServerRequest('GET', '/'), $simpleHandler);
+        $this->assertCount(3, $responseForGetRoot->getHeader('handled-with'));
+
         $responseForPostRoot = $middleware->process(new ServerRequest('POST', '/'), $simpleHandler);
         $this->assertCount(4, $responseForPostRoot->getHeader('handled-with'));
 
