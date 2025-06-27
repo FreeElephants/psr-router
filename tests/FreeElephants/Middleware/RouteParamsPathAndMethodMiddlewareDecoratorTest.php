@@ -46,7 +46,11 @@ class RouteParamsPathAndMethodMiddlewareDecoratorTest extends TestCase
         );
 
         $this->assertTrue($decorator->match(new ServerRequest('GET', '/users/some-id')));
+        $this->assertTrue($decorator->match(new ServerRequest('GET', '/users/123')));
         $this->assertFalse($decorator->match(new ServerRequest('POST', '/users/some-id')));
+        $this->assertFalse($decorator->match(new ServerRequest('GET', '/users/')));
+        $this->assertFalse($decorator->match(new ServerRequest('GET', '/users/?query=string')));
+        $this->assertFalse($decorator->match(new ServerRequest('GET', '/users/123/nested')));
         $this->assertFalse($decorator->match(new ServerRequest('POST', '/')));
         $this->assertFalse($decorator->match(new ServerRequest('GET', '/foo/bar')));
     }
