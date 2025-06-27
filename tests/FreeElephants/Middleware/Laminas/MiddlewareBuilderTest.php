@@ -65,6 +65,19 @@ class MiddlewareBuilderTest extends TestCase
                 '/poster' => [
                     'POST' => 'poster-middleware-2',
                 ],
+            ])->addConfig([
+                '/putter/nested' => [
+                    'PUT' => [
+                        'putter-middleware-1',
+                        'putter-middleware-2',
+                    ],
+                ],
+            ])->addConfig([
+                '/{firstLevel}' => [
+                    'OPTIONS' => [
+                        'common-middleware',
+                    ],
+                ],
             ])
             ->build()
         ;
@@ -82,7 +95,13 @@ class MiddlewareBuilderTest extends TestCase
         $responseForPostRoot = $middleware->process(new ServerRequest('POST', '/'), $simpleHandler);
         $this->assertCount(4, $responseForPostRoot->getHeader('handled-with'));
 
+        $responseForPostPoster = $middleware->process(new ServerRequest('POST', '/poster'), $simpleHandler);
+        $this->assertCount(2, $responseForPostPoster->getHeader('handled-with'));
+
         $responseUnmatched = $middleware->process(new ServerRequest('GET', '/non-configured-path'), $simpleHandler);
         $this->assertCount(0, $responseUnmatched->getHeader('handled-with'));
+
+        $optionsResponse = $middleware->process(new ServerRequest('OPTIONS', '/firstLevelPath'), $simpleHandler);
+        $this->assertCount(1, $optionsResponse->getHeader('handled-with'));
     }
 }

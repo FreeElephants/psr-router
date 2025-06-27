@@ -35,21 +35,21 @@ class RouterTest extends TestCase
         );
 
         $serverRequestForGetUserWithId100 = new ServerRequest('GET', '/users/100');
-        $actualRequestHandlerAndRequest = $router->getHandler($serverRequestForGetUserWithId100);
+        $actualRequestHandlerAndRequest = $router->getHandlerWithRequestContainer($serverRequestForGetUserWithId100);
         $this->assertSame($expectedRequestHandler, $actualRequestHandlerAndRequest->getHandler());
         $this->assertSame('100', $actualRequestHandlerAndRequest->getRequest()->getAttribute('id'));
 
 
         $serverRequestForGetUsersWithoutSlash = new ServerRequest('GET', '/users');
-        $actualRequestHandlerAndRequest = $router->getHandler($serverRequestForGetUsersWithoutSlash);
+        $actualRequestHandlerAndRequest = $router->getHandlerWithRequestContainer($serverRequestForGetUsersWithoutSlash);
         $this->assertSame($expectedRequestHandler, $actualRequestHandlerAndRequest->getHandler());
 
         $serverRequestForGetUsersWithSlash = new ServerRequest('GET', '/users/');
-        $actualRequestHandlerAndRequest = $router->getHandler($serverRequestForGetUsersWithSlash);
+        $actualRequestHandlerAndRequest = $router->getHandlerWithRequestContainer($serverRequestForGetUsersWithSlash);
         $this->assertSame($expectedRequestHandler, $actualRequestHandlerAndRequest->getHandler());
 
         $serverRequestForGetUserWithWrongId = new ServerRequest('GET', '/users/bla-bla');
         $this->expectException(\Exception::class);
-        $router->getHandler($serverRequestForGetUserWithWrongId);
+        $router->getHandlerWithRequestContainer($serverRequestForGetUserWithWrongId);
     }
 }

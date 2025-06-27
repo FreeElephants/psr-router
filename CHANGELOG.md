@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- MiddlewareBuilder (Laminas based)
+- Router implements PSR/RequestHandlerInterface
+
+### Changed
+- **BC:** `Router::getHandler()` method renamed to `getHandlerWithRequestContainer`
+
 ## [0.0.4] - 2025-06-22
 
 ### Changed

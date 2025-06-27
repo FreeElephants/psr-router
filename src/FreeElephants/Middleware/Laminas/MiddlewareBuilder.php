@@ -39,8 +39,15 @@ class MiddlewareBuilder
                 // 'path' => [...]
                 foreach ($pathConfig as $methodOrIndex => $middlewareClassName) {
                     if (is_string($methodOrIndex)) {
-                        // ['GET' => ClassName::class]
-                        $this->config[$path][$methodOrIndex][] = $middlewareClassName;
+                        if (is_string($middlewareClassName)) {
+                            // ['GET' => ClassName::class]
+                            $this->config[$path][$methodOrIndex][] = $middlewareClassName;
+                        } elseif (is_array($middlewareClassName)) {
+                            // ['GET' => [ClassName::class]]
+                            foreach ($middlewareClassName as $class) {
+                                $this->config[$path][$methodOrIndex][] = $class;
+                            }
+                        }
                     } elseif (is_int($methodOrIndex)) {
                         // 'path' => [ClassName::class]
                         foreach ($this->defaultMethods as $method) {
