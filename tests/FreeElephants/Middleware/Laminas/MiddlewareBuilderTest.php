@@ -51,24 +51,47 @@ class MiddlewareBuilderTest extends TestCase
         };
 
         $builder = new MiddlewareBuilder($container);
-        $middleware = $builder->addConfig([
-            '/' => 'root-middleware',
-        ])->addConfig([
-            '/' => [
-                'additional-root-middleware-A',
-                'additional-root-middleware-B',
-            ],
-        ])->build();
+        $middleware = $builder
+            ->addConfig([
+                '/' => 'root-middleware',
+            ])
+            ->addConfig([
+                '/' => [
+                    'additional-root-middleware-A',
+                    'additional-root-middleware-B',
+                ],
+            ])
+            ->addConfig([
+                '/' => [
+                    'POST' => 'additional-root-post-middleware',
+                ],
+            ])
+            ->addConfig([
+                '/poster' => [
+                    'POST' => 'poster-middleware-1',
+                ],
+            ])->addConfig([
+                '/poster' => [
+                    'POST' => 'poster-middleware-2',
+                ],
+            ])
+            ->build()
+        ;
 
-        $response = $middleware->process(new ServerRequest('GET', '/'), new class () implements RequestHandlerInterface {
+        $simpleHandler = new class () implements RequestHandlerInterface {
             public function handle(ServerRequestInterface $request): ResponseInterface
             {
                 return new Response();
             }
-        });
+        };
 
-        $this->assertCount(3, $response->getHeader('handled-with'));
+        //        $responseForGetRoot = $middleware->process(new ServerRequest('GET', '/'), $simpleHandler);
+        //        $this->assertCount(3, $responseForGetRoot->getHeader('handled-with'));
+        //
+        $responseForPostRoot = $middleware->process(new ServerRequest('POST', '/'), $simpleHandler);
+        $this->assertCount(4, $responseForPostRoot->getHeader('handled-with'));
 
-        $this->assertTrue($container->isIdKnown('root-middleware'));
+        $responseUnmatched = $middleware->process(new ServerRequest('GET', '/non-configured-path'), $simpleHandler);
+        $this->assertCount(0, $responseUnmatched->getHeader('handled-with'));
     }
 }

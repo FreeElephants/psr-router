@@ -31,9 +31,9 @@ class RouteParamsPathAndMethodMiddlewareDecorator implements MiddlewareInterface
         return $handler->handle($request);
     }
 
-    private function match(ServerRequestInterface $request): bool
+    public function match(ServerRequestInterface $request): bool
     {
-        $requestPathIsMatchWithRoute = preg_match('#' . $this->pattern . '#', $request->getUri()->getPath()) > 0;
+        $requestPathIsMatchWithRoute = preg_match('#^' . $this->pattern . '$#', $request->getUri()->getPath()) > 0;
         $requestMethodIsMatch = in_array($request->getMethod(), $this->methods);
 
         return $requestPathIsMatchWithRoute && $requestMethodIsMatch;
